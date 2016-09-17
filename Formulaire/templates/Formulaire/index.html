@@ -1,0 +1,10 @@
+{% if all_forms  %}
+    <h1> List of all available forms</h1>
+    <ul>
+        {% for form in all_forms %}
+        <li><a href="/form/{{ form.id }}">{{ form.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <h3> No form available</h3>
+{% endif %}

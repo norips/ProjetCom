@@ -1,0 +1,11 @@
+<h1> {{ form.title }}</h1>
+<ul>
+    {% for question in form.fieldform_set.all %}
+        <li> {{ question }}</li>
+        <ul>
+            {% for answer in question.answer_set.all %}
+            <li> {{ answer }}</li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+</ul>
