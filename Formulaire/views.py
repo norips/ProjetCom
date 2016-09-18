@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse,Http404
 from .models import Form,FieldForm
 from .forms import PollForm,QuestionForm
+from django.forms import modelformset_factory
 # Create your views here.
 
 def index(request):
@@ -19,6 +20,7 @@ def detail(request, form_id):
     return render(request, 'Formulaire/detail.html' , {'form' : form})
 
 def create(request):
+
     if request.POST:
         form = PollForm(request.POST)
         question = QuestionForm(request.POST)

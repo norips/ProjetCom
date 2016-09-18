@@ -18,7 +18,7 @@ class FieldForm(models.Model) :
 
 class Answer(models.Model):
     field = models.ForeignKey(FieldForm, on_delete = models.CASCADE)
-    answer = models.CharField(max_length= 200)
+    answer = models.BooleanField()
 
     def __str__(self):
         return self.answer
