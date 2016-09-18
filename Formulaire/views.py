@@ -27,8 +27,10 @@ def create(request):
         if form.is_valid() and question.is_valid():
             s_form = form.save()
             s_question = question.save(commit = False)
-            s_question.form = s_form
-            s_question.save()
+            for q in s_question:
+                print(q.question)
+                q.form = s_form
+                q.save()
             return redirect('detail', form_id = s_form.id)
     form = PollForm()
     question = QuestionFormSet(queryset=FieldForm.objects.none())
