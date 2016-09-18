@@ -5,19 +5,13 @@ from .forms import PollForm,QuestionForm
 from django.forms import modelformset_factory
 # Create your views here.
 
-def accueil(request):
-    all_forms = Form.objects.all()
-    context = {
-        'all_forms' : all_forms
-    }
-    return render(request, 'Formulaire/accueil.html', context)
-
 def index(request):
     all_forms = Form.objects.all()
     context = {
         'all_forms' : all_forms
     }
     return render(request, 'Formulaire/index.html', context)
+
 def detail(request, form_id):
     try:
         form = Form.objects.get(pk=form_id)
