@@ -20,10 +20,10 @@ def detail(request, form_id):
     return render(request, 'Formulaire/detail.html' , {'form' : form})
 
 def create(request):
-
+    QuestionFormSet = modelformset_factory(FieldForm,fields=('question',))
     if request.POST:
         form = PollForm(request.POST)
-        question = QuestionForm(request.POST)
+        question = QuestionFormSet(request.POST)
         if form.is_valid() and question.is_valid():
             s_form = form.save()
             s_question = question.save(commit = False)
@@ -31,5 +31,5 @@ def create(request):
             s_question.save()
             return redirect('detail', form_id = s_form.id)
     form = PollForm()
-    question = QuestionForm()
+    question = QuestionFormSet(queryset=FieldForm.objects.none())
     return render(request,'Formulaire/create.html',{'form' : form, 'question' : question })

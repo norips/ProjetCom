@@ -1,4 +1,22 @@
 {% load staticfiles %}
+<style type="text/css">
+    .add-row {
+        padding-left:18px;
+        background:url(https://github.com/elo80ka/django-dynamic-formset/blob/master/demo/static/images/add.png?raw=true) no-repeat left center;
+    }
+    .delete-row {
+        /*float:right;*/
+        display:inline-block;
+        margin:5px 0 0 5px;
+        text-indent:-6000px;
+        background:url(https://github.com/elo80ka/django-dynamic-formset/blob/master/demo/static/images/delete.png?raw=true) no-repeat left center;
+        width:16px;
+        height:16px;
+    }
+    .question-formset {
+        display:block
+    }
+</style>
 
 {% if messages %}
     {% for message in messages %}
@@ -12,16 +30,23 @@
     <label>First Name</label>
     {{ form.as_p}}
 
-    {{ question.as_p }}
-
+    <div class="question-formset">
+    {% for q in question %}
+            Question :
+           <tr id="{{ q.prefix }}-row">
+                <td>{{ q.question }}</td>
+           </tr>
+    {% endfor %}
+    </div>
+    {{ question.management_form }}
     <input type="submit" value="Update Profile" class="button"/>
 </form>
 
 <!-- Include formset plugin - including jQuery dependency -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="{% static '/jquery.formset.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.js"></script>
 <script>
-    $('.link-formset').formset({
+    $('.question-formset').formset({
         addText: 'add link',
         deleteText: 'remove'
     });
