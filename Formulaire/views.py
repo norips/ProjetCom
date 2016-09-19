@@ -42,31 +42,34 @@ def create(request):
     question = QuestionFormSet(queryset=FieldForm.objects.none())
     return render(request,'Formulaire/create.html',{'form' : form, 'question' : question })
 
-def edit(request, form_id):
-    QuestionFormSet = modelformset_factory(FieldForm, form = QuestionForm)
-    poll = get_object_or_404(Form, pk=form_id)
-    if request.method == "POST":
-        form = PollForm(request.POST, instance = poll)
-        question = QuestionFormSet(request.POST)
-        print(FieldForm.objects.filter(form = poll))
-        if form.is_valid() and question.is_valid():
-            s_form = form.save()
-            s_question = question.save(commit=False)
-            print(s_question)
-            for q in s_question:
-                q.form = s_form
-                q.save()
-            return redirect('detail', form_id=s_form.id)
+def edit(request, form_id, ok = False):
+    if request.session['id'] and  request.session['id'] == form_id:
+        QuestionFormSet = modelformset_factory(FieldForm, form = QuestionForm)
+        poll = get_object_or_404(Form, pk=form_id)
+        if request.method == "POST":
+            form = PollForm(request.POST, instance = poll)
+            question = QuestionFormSet(request.POST)
+            print(FieldForm.objects.filter(form = poll))
+            if form.is_valid() and question.is_valid():
+                s_form = form.save()
+                s_question = question.save(commit=False)
+                print(s_question)
+                for q in s_question:
+                    q.form = s_form
+                    q.save()
+                return redirect('detail', form_id=s_form.id)
+        else:
+            form = PollForm(instance=poll)
+            question = QuestionFormSet(queryset = FieldForm.objects.filter(form=poll))
+        return render(request, 'Formulaire/create.html', {'form': form, 'question': question})
     else:
-        form = PollForm(instance=poll)
-        question = QuestionFormSet(queryset = FieldForm.objects.filter(form=poll))
-    return render(request, 'Formulaire/create.html', {'form': form, 'question': question})
-
+        return redirect('pass', form_id = form_id)
 def check_pass(request,form_id):
     if request.POST:
         passw = request.POST.get('password')
         poll = get_object_or_404(Form, pk=form_id)
         if poll.password == passw:
-            return redirect('edit', form_id=form_id)
-    return render(request, 'Formulaire/check_pass.html', {})
+            request.session['id'] = form_id
+            return redirect('edit',form_id=form_id)
+    return render(request, 'Formulaire/check_pass.html',)
 
