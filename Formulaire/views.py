@@ -43,7 +43,7 @@ def create(request):
     return render(request,'Formulaire/create.html',{'form' : form, 'question' : question })
 
 def edit(request, form_id, ok = False):
-    if request.session['id'] and  request.session['id'] == form_id:
+    if id in request.session and  request.session['id'] == form_id:
         QuestionFormSet = modelformset_factory(FieldForm, form = QuestionForm)
         poll = get_object_or_404(Form, pk=form_id)
         if request.method == "POST":
