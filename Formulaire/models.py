@@ -21,4 +21,4 @@ class Answer(models.Model):
     answer = models.BooleanField()
 
     def __str__(self):
-        return self.answer
+        return str(self.answer)

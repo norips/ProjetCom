@@ -28,17 +28,18 @@
     {% csrf_token %}
 
     <label>First Name</label>
+    {{ form.id }}
     {{ form.as_p}}
-
-    <div class="question-formset">
+    {{ question.management_form }}
     {% for q in question %}
+        <div class="question-formset">
+        {{ q.id }}
             Question :
-           <tr id="{{ q.prefix }}-row">
+           <tr id="{{ q.prefix }}">
                 <td>{{ q.question }}</td>
            </tr>
+        </div>
     {% endfor %}
-    </div>
-    {{ question.management_form }}
     <input type="submit" value="Update Profile" class="button"/>
 </form>
 

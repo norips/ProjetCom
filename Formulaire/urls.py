@@ -8,5 +8,7 @@ urlpatterns = [
     # /form/id
     
     url(r'^(?P<form_id>[0-9]+)/$', views.detail, name = 'detail'),
+    url(r'^(?P<form_id>[0-9]+)/pass$', views.check_pass, name = 'pass'),
+    url(r'^(?P<form_id>[0-9]+)/edit$',views.edit,name='edit'),
     url(r'^create', views.create, name = 'create'),
 ]
