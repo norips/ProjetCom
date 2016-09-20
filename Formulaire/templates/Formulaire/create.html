@@ -32,12 +32,10 @@
     {{ form.as_p}}
     {{ question.management_form }}
     {% for q in question %}
-        <div class="question-formset">
+        <div class="question-formset" id="{{ q.prefix }}">
+        Question :
         {{ q.id }}
-            Question :
-           <tr id="{{ q.prefix }}">
-                <td>{{ q.question }}</td>
-           </tr>
+        {{ q.question }}
         </div>
     {% endfor %}
     <input type="submit" value="Update Profile" class="button"/>
@@ -49,6 +47,7 @@
 <script>
     $('.question-formset').formset({
         addText: 'add link',
-        deleteText: 'remove'
+        deleteText: 'remove',
+        prefix : "{{ question.prefix }}"
     });
 </script>

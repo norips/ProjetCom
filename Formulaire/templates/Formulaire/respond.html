@@ -1,0 +1,14 @@
+<form method="post">
+    {% csrf_token %}
+
+    <label>{{ title }}</label>
+    {% for q in question %}
+        <div class="question-formset">
+        Question :
+        {{ q.question }} <br>
+        <input type="radio" name="{{ q.id }}" value="True" checked> Vrai<br>
+        <input type="radio" name="{{ q.id }}" value="False"> Faux<br>
+        </div>
+    {% endfor %}
+    <input type="submit" value="Update Profile" class="button"/>
+</form>
