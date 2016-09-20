@@ -28,6 +28,8 @@ def detail(request, form_id):
 def create(request):
     QuestionFormSet = modelformset_factory(FieldForm, form = QuestionForm)
     if request.POST:
+        print("Create")
+        print(request.POST)
         form = PollForm(request.POST)
         question = QuestionFormSet(request.POST,prefix='question')
         if form.is_valid() and question.is_valid():
@@ -44,6 +46,8 @@ def create(request):
 
 def edit(request, form_id):
     if request.session.get('id', None) == form_id:
+        print("Edit")
+        print(request.POST)
         QuestionFormSet = modelformset_factory(FieldForm, form = QuestionForm)
         poll = get_object_or_404(Form, pk=form_id)
         if request.method == "POST":
